@@ -1,0 +1,89 @@
+===============================
+Python
+===============================
+
+pycache/
+*.py[cod]
+*.pyo
+*.pyd
+
+===============================
+Entornos virtuales
+===============================
+
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+===============================
+Variables de entorno (CLAVES API)
+===============================
+
+.env
+.env.*
+
+===============================
+Archivos de base de datos locales
+===============================
+
+*.db
+*.sqlite3
+
+===============================
+Archivos generados por IA / modelos
+===============================
+
+*.pth
+*.pt
+*.onnx
+models/
+checkpoints/
+
+===============================
+Uploads de imágenes médicas
+===============================
+
+uploads/
+*.jpg
+*.png
+*.jpeg
+*.dcm
+
+===============================
+Logs
+===============================
+
+*.log
+logs/
+
+===============================
+Archivos temporales del sistema
+===============================
+
+.DS_Store
+Thumbs.db
+
+===============================
+VSCode / IDEs
+===============================
+
+.vscode/
+.idea/
+
+===============================
+Archivos de testing / cache
+===============================
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+===============================
+Node (si luego agregas frontend)
+===============================
+
+node_modules/
+dist/
+build/

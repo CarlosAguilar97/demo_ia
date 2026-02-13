@@ -1,0 +1,29 @@
+.hidden {
+    display: none;
+}
+
+#preview img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+.informe-box {
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.informe-box h2 {
+    font-size: 20px;
+    margin-top: 20px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 6px;
+}
+
+.informe-box strong {
+    color: #0d6efd;
+}
+
+.card {
+    border-radius: 10px;
+}
