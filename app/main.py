@@ -1,7 +1,7 @@
 import uuid
 import os
 import shutil
-
+import tempfile
 from fastapi import FastAPI, UploadFile, File, Form, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -14,8 +14,7 @@ from app.prompt_medico import construir_prompt
 
 app = FastAPI(title="Asistente Radiológico IA")
 
-UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+UPLOAD_DIR = tempfile.gettempdir()
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__)) if "api" in __file__ else os.path.dirname(__file__)
 

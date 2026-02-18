@@ -1,11 +1,10 @@
 fastapi
 uvicorn
 python-multipart
-jinja2
-aiofiles
 pillow
 numpy
-python-dotenv
-openai
 libsql-client
-httpx
+python-dotenv
+jinja2
+aiofiles
+openai
