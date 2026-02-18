@@ -3,7 +3,7 @@ from openai import OpenAI
 from prompt_medico import construir_prompt
 
 
-client = OpenAI(api_key=os.environ("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def generar_informe_radiologico(hallazgos: dict) -> str:
     """
