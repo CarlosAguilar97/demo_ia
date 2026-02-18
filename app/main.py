@@ -7,17 +7,20 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from model import analizar_radiografia
-from report_generator import generar_informe_radiologico
-from db import ejecutar
+from app.model import analizar_radiografia
+from app.report_generator import generar_informe_radiologico
+from app.db import ejecutar
+from app.prompt_medico import construir_prompt
 
 app = FastAPI(title="Asistente Radiológico IA")
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+BASE_DIR = os.path.dirname(os.path.dirname(__file__)) if "api" in __file__ else os.path.dirname(__file__)
+
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)

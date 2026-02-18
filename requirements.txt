@@ -5,7 +5,7 @@ jinja2
 aiofiles
 pillow
 numpy
-python-dotenv
+envpython-dot
 openai
 libsql-client
 httpx

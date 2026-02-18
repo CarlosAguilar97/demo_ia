@@ -1,11 +1,9 @@
 import os
 from openai import OpenAI
-from dotenv import load_dotenv
 from prompt_medico import construir_prompt
 
-load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.environ("OPENAI_API_KEY"))
 
 def generar_informe_radiologico(hallazgos: dict) -> str:
     """

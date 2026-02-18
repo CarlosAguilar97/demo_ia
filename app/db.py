@@ -1,11 +1,9 @@
 import os
 from libsql_client import create_client
-from dotenv import load_dotenv
 
-load_dotenv()
 
-url = os.getenv("TURSO_DATABASE_URL")
-auth_token = os.getenv("TURSO_AUTH_TOKEN")
+url = os.environ("TURSO_DATABASE_URL")
+auth_token = os.environ("TURSO_AUTH_TOKEN")
 
 client = create_client(
     url=url,
