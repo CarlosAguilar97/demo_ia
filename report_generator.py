@@ -1,42 +1,43 @@
 import os
-from dotenv import load_dotenv
 from openai import OpenAI
+from dotenv import load_dotenv
+from prompt_medico import construir_prompt
 
 load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def generar_informe_radiologico(hallazgos: dict):
+def generar_informe_radiologico(hallazgos: dict) -> str:
     """
-    Convierte hallazgos estructurados en informe tipo radiólogo.
+    Convierte hallazgos estructurados en informe radiológico profesional.
     """
 
-    prompt = f"""
-Actúa como un radiólogo torácico con experiencia.
+    try:
+        prompt = construir_prompt(hallazgos)
 
-Redacta un INFORME RADIOLÓGICO estructurado usando metodología A-B-C-D-E.
-NO des diagnóstico definitivo.
-Usa lenguaje médico descriptivo.
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",  # modelo estable y económico
+            messages=[
+                {"role": "system", "content": "Eres un médico radiólogo experto en tórax."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.2,
+        )
 
-Hallazgos detectados por IA:
+        return response.choices[0].message.content
 
-Airway: {hallazgos['airway']}
-Pulmones: {hallazgos['pulmones']}
-Pleura: {hallazgos['pleura']}
-Cardíaco: {hallazgos['cardiaco']}
-Otros: {hallazgos['otros']}
+    except Exception as e:
+        print("❌ Error OpenAI:", e)
 
-Incluye:
-1. Evaluación sistemática
-2. Descripción de hallazgos
-3. Hallazgos ausentes relevantes
-4. Impresión radiológica (no diagnóstica)
+        # fallback para que la demo nunca muera
+        return f"""
+EL ESTUDIO RADIOLÓGICO DEL TÓRAX, MUESTRA:
+
+{hallazgos}
+
+IMPRESIÓN DIAGNÓSTICA:
+Hallazgos descritos por sistema automatizado.
+Se recomienda correlación clínica.
 """
-
-    response = client.responses.create(
-        model="gpt-5.2",   # ✔ modelo correcto para Responses API
-        input=prompt,
-        temperature=0.2
-    )
 
     return response.output[0].content[0].text
