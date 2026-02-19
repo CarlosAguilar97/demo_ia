@@ -22,9 +22,7 @@ if os.path.isdir(STATIC_DIR):
     
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+UPLOAD_DIR = "/tmp"
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
