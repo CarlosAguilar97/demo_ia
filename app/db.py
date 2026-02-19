@@ -1,17 +1,20 @@
 import os
-import libsql_client
+from libsql_client import create_client
 
 
-url = os.environ.get("TURSO_DATABASE_URL")
-auth_token = os.environ.get("TURSO_AUTH_TOKEN")
+def get_client():
+    url = os.environ.get("TURSO_DATABASE_URL")
+    auth_token = os.environ.get("TURSO_AUTH_TOKEN")
 
-client = create_client(
-    url=url,
-    auth_token=auth_token
-)
+    return create_client(
+        url=url,
+        auth_token=auth_token
+    )
+
 
 def ejecutar(query: str, params=None):
     if params is None:
         params = []
 
+    client = get_client()  # ✅ crear conexión por request (serverless-safe)
     return client.execute(query, params)

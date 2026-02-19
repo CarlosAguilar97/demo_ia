@@ -1,9 +1,7 @@
 import os
 from openai import OpenAI
-from prompt_medico import construir_prompt
+from app.prompt_medico import construir_prompt
 
-
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def generar_informe_radiologico(hallazgos: dict) -> str:
     """
@@ -11,10 +9,15 @@ def generar_informe_radiologico(hallazgos: dict) -> str:
     """
 
     try:
+        # ✅ Crear cliente dentro de la ejecución (serverless-safe)
+        client = OpenAI(
+            api_key=os.environ.get("OPENAI_API_KEY")
+        )
+
         prompt = construir_prompt(hallazgos)
 
         response = client.chat.completions.create(
-            model="gpt-4o-mini",  # modelo estable y económico
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "Eres un médico radiólogo experto en tórax."},
                 {"role": "user", "content": prompt}
@@ -27,7 +30,7 @@ def generar_informe_radiologico(hallazgos: dict) -> str:
     except Exception as e:
         print("❌ Error OpenAI:", e)
 
-        # fallback para que la demo nunca muera
+        # fallback para demo (clave en serverless)
         return f"""
 EL ESTUDIO RADIOLÓGICO DEL TÓRAX, MUESTRA:
 
@@ -37,5 +40,3 @@ IMPRESIÓN DIAGNÓSTICA:
 Hallazgos descritos por sistema automatizado.
 Se recomienda correlación clínica.
 """
-
-    return response.output[0].content[0].text
