@@ -3,8 +3,9 @@ import os
 import shutil
 import tempfile
 from fastapi import FastAPI, UploadFile, File, Form, Request
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from app.model import analizar_radiografia
@@ -15,14 +16,13 @@ from app.prompt_medico import construir_prompt
 app = FastAPI(title="Asistente Radiológico IA")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_DIR = os.path.join(BASE_DIR, "static")
 
-if os.path.isdir(STATIC_DIR):
-    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/static", StaticFiles(directory="./static"), name="static")  # static/ en RAÍZ
     
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 UPLOAD_DIR = "/tmp"
+#UPLOAD_DIR = tempfile.gettempdir()  
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):

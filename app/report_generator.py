@@ -1,7 +1,9 @@
 import os
 from openai import OpenAI
 from app.prompt_medico import construir_prompt
+#from dotenv import load_dotenv
 
+#load_dotenv()
 
 def generar_informe_radiologico(hallazgos: dict) -> str:
     """
