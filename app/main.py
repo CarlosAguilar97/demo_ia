@@ -19,10 +19,12 @@ STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 if os.path.isdir(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-    UPLOAD_DIR = os.path.join(tempfile.gettempdir(), "uploads")
     
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
