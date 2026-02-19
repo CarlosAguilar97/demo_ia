@@ -14,12 +14,14 @@ from app.prompt_medico import construir_prompt
 
 app = FastAPI(title="Asistente Radiológico IA")
 
-UPLOAD_DIR = tempfile.gettempdir()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__)) if "api" in __file__ else os.path.dirname(__file__)
-
+if os.path.isdir(STATIC_DIR):
+    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+    UPLOAD_DIR = os.path.join(tempfile.gettempdir(), "uploads")
+    
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
-app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)

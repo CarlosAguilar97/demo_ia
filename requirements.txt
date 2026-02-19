@@ -3,7 +3,8 @@ uvicorn
 jinja2
 python-multipart
 aiofiles
-openai
-libsql-client
 pillow
 numpy
+openai
+libsql-client
+python-dotenv
